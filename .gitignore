@@ -3,7 +3,7 @@
 /out
 /reports
 /cov-reports
-node.profiler.hicharts.json
-node.profiler.json
+zoran.hicharts.json
+zoran.json
 npm-debug.log
 

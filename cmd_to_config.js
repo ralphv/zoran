@@ -9,7 +9,7 @@
  * you can pass composite references like a.b.c=value
  * for strings with spaces, the command line will be: "ref=this is the new string value"
  *
- * node.profiler is licensed under the [BSD-3 License] http://bitbucket.com/ralphv/node.profiler/raw/master/LICENSE.
+ * zoran is licensed under the [BSD-3 License] https://raw.githubusercontent.com/ralphv/zoran/master/LICENSE.
  * do not remove this notice.
  */
 'use strict';
@@ -17,8 +17,8 @@
 var assert = require("assert");
 var config = require("./config.js");
 
-console.node_profiler.log("cmd_to_config: current config: " + JSON.stringify(config));
-console.node_profiler.log("cmd_to_config: scanning command line arguments for ./config.js matches");
+console.zoran.log("cmd_to_config: current config: " + JSON.stringify(config));
+console.zoran.log("cmd_to_config: scanning command line arguments for ./config.js matches");
 
 process.argv.forEach(function(val) {
   var parts = val.split('=');
@@ -54,21 +54,21 @@ process.argv.forEach(function(val) {
         } else { // written using comma only, assume array of strings
           config[configElementRef] = configElementValue.split(",");
         }
-        console.node_profiler.log("cmd_to_config: [" + parts[0] + "=" + JSON.stringify(config[configElementRef]) + "] (array)");
+        console.zoran.log("cmd_to_config: [" + parts[0] + "=" + JSON.stringify(config[configElementRef]) + "] (array)");
       } else if(typeof(config[configElementRef]) === "boolean") {
         if(configElementValue === "true" || configElementValue === "false") {
           config[configElementRef] = (configElementValue === "true");
-          console.node_profiler.log("cmd_to_config: [" + parts[0] + "=" + config[configElementRef] + "] (boolean)");
+          console.zoran.log("cmd_to_config: [" + parts[0] + "=" + config[configElementRef] + "] (boolean)");
         }
       } else if(typeof(config[configElementRef]) === "number") {
         try {
           config[configElementRef] = parseInt(configElementValue);
-          console.node_profiler.log("cmd_to_config: [" + parts[0] + "=" + config[configElementRef] + "] (integer)");
+          console.zoran.log("cmd_to_config: [" + parts[0] + "=" + config[configElementRef] + "] (integer)");
         } catch(err) {
         }
       } else {
         config[configElementRef] = configElementValue;
-        console.node_profiler.log("cmd_to_config: [" + parts[0] + "=" + config[configElementRef] + "] (string)");
+        console.zoran.log("cmd_to_config: [" + parts[0] + "=" + config[configElementRef] + "] (string)");
       }
     }
     if(composite) {
@@ -77,5 +77,5 @@ process.argv.forEach(function(val) {
     }
   }
 });
-console.node_profiler.log("cmd_to_config: done scanning");
+console.zoran.log("cmd_to_config: done scanning");
 

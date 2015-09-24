@@ -1,17 +1,17 @@
 /**
  * Created by Ralph Varjabedian on 11/11/14.
- * node.profiler is licensed under the [BSD-3 License] http://bitbucket.com/ralphv/node.profiler/raw/master/LICENSE.
+ * zoran is licensed under the [BSD-3 License] https://raw.githubusercontent.com/ralphv/zoran/master/LICENSE.
  * do not remove this notice.
  */
 
-console.node_profiler = {};
+console.zoran = {};
 
-console.node_profiler.log = function() {
-  console.log.apply(this, ["\033[1;34m[node.profiler]\033[0m"].concat(Array.prototype.slice.call(arguments, 0)));
+console.zoran.log = function() {
+  console.log.apply(this, ["\033[1;34m[zoran]\033[0m"].concat(Array.prototype.slice.call(arguments, 0)));
 };
 
-console.node_profiler.warn = function() {
-  console.warn.apply(this, ["\033[1;31m[node.profiler]\033[0m"].concat(Array.prototype.slice.call(arguments, 0)));
+console.zoran.warn = function() {
+  console.warn.apply(this, ["\033[1;31m[zoran]\033[0m"].concat(Array.prototype.slice.call(arguments, 0)));
 };
 
 var config = require("./config.js");
@@ -28,7 +28,7 @@ var last_id = 0;
 function resetTimer() {
   clearTimeout(last_id);
   last_id = setTimeout(function() {
-    console.node_profiler.log("total functions attached", functionGenerator.getCount());
+    console.zoran.log("total functions attached", functionGenerator.getCount());
   }, 5000);
 }
 
@@ -70,25 +70,25 @@ requireHook.setEvent(function(requireResult, requireCallData) {
               requireResult = proxy.createProxy(requireResult, handlers.beforeFunc, handlers.afterFunc, requireCallData);
             }
           }
-          console.node_profiler.log("attaching on prototype", requireCallData.getId(), functionGenerator.getCount() - count);
+          console.zoran.log("attaching on prototype", requireCallData.getId(), functionGenerator.getCount() - count);
         } else {
           if(config.verbose >= 1) {
-            console.node_profiler.log("skipping", requireCallData.getId());
+            console.zoran.log("skipping", requireCallData.getId());
           }
         }
-      } else if(!requireResult.prototype && requireResult.constructor === Object && requireResult !== profiler) { // is a generic instance of Object
+      } else if(!requireResult.prototype && requireResult.constructor === Object && requireResult !== zoran) { // is a generic instance of Object
         if(!skipAttach(requireCallData.getId())) {
           var count = functionGenerator.getCount();
           proxy.createPrototypeProxy(requireResult, handlers.beforeFunc, handlers.afterFunc, requireCallData);
-          console.node_profiler.log("attaching on object", requireCallData.getId(), functionGenerator.getCount() - count);
+          console.zoran.log("attaching on object", requireCallData.getId(), functionGenerator.getCount() - count);
         } else {
           if(config.verbose >= 1) {
-            console.node_profiler.log("skipping", requireCallData.getId());
+            console.zoran.log("skipping", requireCallData.getId());
           }
         }
       }
     } else if(config.verbose >= 1) {
-      console.node_profiler.log("skipping", requireCallData.require);
+      console.zoran.log("skipping", requireCallData.require);
     }
     resetTimer();
   }
@@ -96,12 +96,12 @@ requireHook.setEvent(function(requireResult, requireCallData) {
 });
 
 /**
- * The main interface to the library node.profiler
+ * The main interface to the library zoran
  *
- * @exports profiler
+ * @exports zoran
  * @type {{attachMonitor: attachMonitor, begin: begin, end: end}}
  */
-var profiler = {
+var zoran = {
   /**
    * Manually attach a monitor to a single function
    *
@@ -162,4 +162,4 @@ var profiler = {
     handlers.flush();
   }
 };
-module.exports = profiler;
+module.exports = zoran;

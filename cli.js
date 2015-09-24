@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 /*
- * node.profiler is licensed under the [BSD-3 License] http://bitbucket.com/ralphv/node.profiler/raw/master/LICENSE.
+ * zoran is licensed under the [BSD-3 License] https://raw.githubusercontent.com/ralphv/zoran/master/LICENSE.
  * do not remove this notice.
  */
 'use strict';
 
 var path = require("path");
-var node_profiler = require("./index.js");
+var zoran = require("./index.js");
 require("./cmd_to_config.js");
 var config = require("./config.js");
 
 if(config.runGrunt) { // a special option to run a grunt task instead
   var grunt = require("grunt");
   grunt.tasks([config.runGrunt], {}, function() {
-    node_profiler.flush();
+    zoran.flush();
     process.exit();
   });
 } else {

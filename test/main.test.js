@@ -7,7 +7,7 @@
 var should = require('should');
 var path = require('path');
 
-describe('testing node.profiler', function() {
+describe('testing zoran', function() {
   this.timeout(0);
 
   it('testing require and hook', function(done) {
@@ -23,20 +23,20 @@ describe('testing node.profiler', function() {
   });
 
   it('testing attachMonitor on sync function', function(done) {
-    var node_profiler = require("../");
-    node_profiler.reset();
+    var zoran = require("../");
+    zoran.reset();
     var func = function(a, b) {
       return a + b;
     };
     try {
-      node_profiler.attachMonitor({}, "not-a-function");
+      zoran.attachMonitor({}, "not-a-function");
     } catch(err) {
       should.exist(err);
     }
-    func = node_profiler.attachMonitor(func, "sync");
-    func = node_profiler.attachMonitor(func, "sync"); // test if already hooked test passes
+    func = zoran.attachMonitor(func, "sync");
+    func = zoran.attachMonitor(func, "sync"); // test if already hooked test passes
     func(10, 12);
-    var data = node_profiler.getData();
+    var data = zoran.getData();
     should.exist(data.sync);
     should.equal(data.sync.async.count, 0);
     should.equal(data.sync.sync.count, 1);
@@ -44,14 +44,14 @@ describe('testing node.profiler', function() {
   });
 
   it('testing attachMonitor on ASync function', function(done) {
-    var node_profiler = require("../");
-    node_profiler.reset();
+    var zoran = require("../");
+    zoran.reset();
     var func = function(a, b, cb) {
       cb(a + b);
     };
-    func = node_profiler.attachMonitor(func, "async");
+    func = zoran.attachMonitor(func, "async");
     func(10, 12, function() {
-      var data = node_profiler.getData();
+      var data = zoran.getData();
       should.exist(data.async);
       should.equal(data.async.async.count, 1);
       should.equal(data.async.sync.count, 0);
@@ -60,16 +60,16 @@ describe('testing node.profiler', function() {
   });
 
   it('testing begin/end', function(done) {
-    var node_profiler = require("../");
-    node_profiler.reset();
+    var zoran = require("../");
+    zoran.reset();
     var func = function(a, b) {
-      var callInstance = node_profiler.begin("sync", arguments);
+      var callInstance = zoran.begin("sync", arguments);
       var x = a + b;
-      node_profiler.end(arguments, callInstance);
+      zoran.end(arguments, callInstance);
       return x;
     };
     func(10, 12);
-    var data = node_profiler.getData();
+    var data = zoran.getData();
     should.exist(data.sync);
     should.equal(data.sync.async.count, 0);
     should.equal(data.sync.sync.count, 1);
@@ -77,14 +77,14 @@ describe('testing node.profiler', function() {
   });
 
   it('testing auto attach on require prototype', function(done) {
-    var node_profiler = require("../");
-    node_profiler.reset();
-    var count = node_profiler.getFunctionsCount();
+    var zoran = require("../");
+    zoran.reset();
+    var count = zoran.getFunctionsCount();
     var MathClass = require("./MathClass");
     require("./MathClass"); // require again
     var keyPrefix = __dirname + "/MathClass.js:";
-    should.equal(node_profiler.getFunctionsCount(), count + 6);
-    var data = node_profiler.getData();
+    should.equal(zoran.getFunctionsCount(), count + 6);
+    var data = zoran.getData();
     should.exist(data);
     var math = new MathClass();
     math.add(10, 12);
@@ -108,13 +108,13 @@ describe('testing node.profiler', function() {
   });
 
   it('testing auto attach on require object', function(done) {
-    var node_profiler = require("../");
-    node_profiler.reset();
-    var count = node_profiler.getFunctionsCount();
+    var zoran = require("../");
+    zoran.reset();
+    var count = zoran.getFunctionsCount();
     var math = require(path.join(__dirname, "mathHelper.js"));
     var keyPrefix = __dirname + "/mathHelper.js:";
-    should.equal(node_profiler.getFunctionsCount(), count + 5);
-    var data = node_profiler.getData();
+    should.equal(zoran.getFunctionsCount(), count + 5);
+    var data = zoran.getData();
     should.exist(data);
     math.add(10, 12);
     should.exist(data[keyPrefix + "add"]);
@@ -133,11 +133,11 @@ describe('testing node.profiler', function() {
   });
 
   it('testing correct metrics', function(done) {
-    var node_profiler = require("../");
-    node_profiler.reset();
+    var zoran = require("../");
+    zoran.reset();
     var math = require("./mathHelper.js");
     var keyPrefix = __dirname + "/mathHelper.js:";
-    var data = node_profiler.getData();
+    var data = zoran.getData();
     math.sleep(100, function() {
       (data[keyPrefix + "sleep"].async.total).should.be.within(98, 110);
       math.sleep(200, function() {

@@ -1,6 +1,6 @@
 /**
  * Created by Ralph Varjabedian on 11/16/14.
- * node.profiler is licensed under the [BSD-3 License] http://bitbucket.com/ralphv/node.profiler/raw/master/LICENSE.
+ * zoran is licensed under the [BSD-3 License] https://raw.githubusercontent.com/ralphv/zoran/master/LICENSE.
  * do not remove this notice.
  */
 
@@ -68,20 +68,20 @@ module.exports = function(data, engineData, cb) {
   } catch(err) {
   }
 
-  var title = "<a href='https://www.npmjs.org/package/node.profiler'>node.profiler</a> high-charts total calls (" + engineData.totalCalls + ") total attached (" + engineData.totalAttached + ")";
+  var title = "<a href='https://www.npmjs.org/package/zoran'>zoran</a> high-charts total calls (" + engineData.totalCalls + ") total attached (" + engineData.totalAttached + ")";
 
   if(cb) {
     fs.readFile(path.join(__dirname, "template.html"), "utf8", function(err, template) {
-      template = modifyTemplate(template, highcharts, "node.profiler high-charts", JSON.stringify(title));
+      template = modifyTemplate(template, highcharts, "zoran high-charts", JSON.stringify(title));
       fs.writeFile(path.join(process.cwd(), "reports", "high-charts.html"), template, function() {
-        console.node_profiler.log("created ./reports/high-charts.html");
+        console.zoran.log("created ./reports/high-charts.html");
         cb();
       });
     });
   } else {
     var template = fs.readFileSync(path.join(__dirname, "template.html"), "utf8");
-    template = modifyTemplate(template, highcharts, "node.profiler high-charts", JSON.stringify(title));
+    template = modifyTemplate(template, highcharts, "zoran high-charts", JSON.stringify(title));
     fs.writeFileSync(path.join(process.cwd(), "reports", "high-charts.html"), template);
-    console.node_profiler.log("created ./reports/high-charts.html");
+    console.zoran.log("created ./reports/high-charts.html");
   }
 };

@@ -1,6 +1,6 @@
 /**
  * Created by Ralph Varjabedian on 11/12/14.
- * node.profiler is licensed under the [BSD-3 License] http://bitbucket.com/ralphv/node.profiler/raw/master/LICENSE.
+ * zoran is licensed under the [BSD-3 License] https://raw.githubusercontent.com/ralphv/zoran/master/LICENSE.
  * do not remove this notice.
  */
 

@@ -1,6 +1,6 @@
 /**
  * Created by Ralph Varjabedian on 11/11/14.
- * node.profiler is licensed under the [BSD-3 License] http://bitbucket.com/ralphv/node.profiler/raw/master/LICENSE.
+ * zoran is licensed under the [BSD-3 License] https://raw.githubusercontent.com/ralphv/zoran/master/LICENSE.
  * do not remove this notice.
  */
 'use strict';
@@ -43,7 +43,7 @@ function callReporters(data, engineData, sync) {
       var callReporter = require("./reporters/" + reporter + "/", "__skip");
       callReporter(data, engineData, sync ? null : function() {});
     } catch(err) {
-      console.node_profiler.log("reporter", reporter, "failed to run correctly", err);
+      console.zoran.log("reporter", reporter, "failed to run correctly", err);
     }
   }
 }
@@ -55,7 +55,7 @@ function writeOutput(sync) {
   dirty = false;
 
   if(sync) {
-    console.node_profiler.log("writing result");
+    console.zoran.log("writing result");
   }
 
   var totalCallsCount = 0;
@@ -65,13 +65,13 @@ function writeOutput(sync) {
   }
 
   if(!sync) {
-    fs.writeFile(path.join(process.cwd(), "node.profiler.json"), JSON.stringify(data, null, 2), function() {
-      console.node_profiler.log("results flushed, total calls", totalCallsCount);
+    fs.writeFile(path.join(process.cwd(), "zoran.json"), JSON.stringify(data, null, 2), function() {
+      console.zoran.log("results flushed, total calls", totalCallsCount);
       callReporters(data, {totalCalls: totalCallsCount, totalAttached: functionGenerator.getCount()}, sync);
     });
   } else {
-    fs.writeFileSync(path.join(process.cwd(), "node.profiler.json"), JSON.stringify(data, null, 2));
-    console.node_profiler.log("results written, total calls", totalCallsCount);
+    fs.writeFileSync(path.join(process.cwd(), "zoran.json"), JSON.stringify(data, null, 2));
+    console.zoran.log("results written, total calls", totalCallsCount);
     callReporters(data, {totalCalls: totalCallsCount, totalAttached: functionGenerator.getCount()}, sync);
   }
 }
@@ -115,7 +115,7 @@ var handlers = module.exports = {
     }
     var key = handlers.getKey(proxyDefinition);
     if(config.verbose >= 2) {
-      console.node_profiler.log("before: ", key);
+      console.zoran.log("before: ", key);
     }
     if(!data[key]) {
       data[key] = {
@@ -130,7 +130,7 @@ var handlers = module.exports = {
     }
     var key = handlers.getKey(proxyDefinition);
     if(config.verbose >= 2) {
-      console.node_profiler.log("after: ", key);
+      console.zoran.log("after: ", key);
     }
     var ms = elapsed(callInstance.start);
     var store = data[key];
