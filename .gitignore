@@ -1,0 +1,9 @@
+/.idea
+/node_modules
+/out
+/reports
+/cov-reports
+node.profiler.hicharts.json
+node.profiler.json
+npm-debug.log
+
