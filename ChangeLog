@@ -1,0 +1,8 @@
+* [15-11-2014@0.1.1] added coverage grunt task
+* [15-11-2014@0.1.1] added runGrunt option to run a grunt task like "test"
+* [15-11-2014@0.1.1] fixing verbose and adding 3 levels
+* [16-11-2014@0.1.2] fix for sub-prefix name in recursive createPrototypeProxy
+* [17-11-2014@0.1.3] added includeAttach option
+* [17-11-2014@0.1.3] added safe async option
+* [17-11-2014@0.1.3] better hooking of functions/inner functions/classes
+* [17-11-2014@0.1.6] remove require hook into a separate module

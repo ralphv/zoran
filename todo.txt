@@ -1,0 +1,21 @@
+  add reporters
+  add high-charts reporter
+  simpler array format on command line
+  added includeAttach
+
+  added license notice
+  added getId on requireHook
+  added explicit skip to requireHook
+  changed the way isBelongsToProject works, will take substrings and not just full paths now
+  added includeAttach
+  added totals to counts
+
+  add different levels of AsyncDetection (safe vs not) and make that as a configuration
+  add a warning for the Async detection
+  add the array of cb names as parameters...
+
+  (add all those new info to the readme, especially about the async type)
+  copy stuff on functions
+
+
+

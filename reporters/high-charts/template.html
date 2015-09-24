@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>[TEMPLATE.PAGETITLE]</title>
+    <script type='text/javascript' src='https://code.jquery.com/jquery-1.9.1.js'></script>
+    <script type='text/javascript'>//<![CDATA[
+    var data = [TEMPLATE.DATA];
+    $(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                plotBackgroundColor: null,
+                plotBorderWidth: 1,//null,
+                plotShadow: false
+            },
+            title: {
+                text: [TEMPLATE.TITLE],
+                useHTML: true
+            },
+            subtitle: {
+                text: '<div align="center"><form>' +
+                      '<label title="The average time a function took (time per call)"><input type="radio" onclick="radioClicked(this);" name="dataType" value="average" checked />average</label>' +
+                      '<label title="The total time a function took in milliseconds"><input type="radio" onclick="radioClicked(this);" name="dataType" value="total" />total time</label>' +
+                      '<label title="The total count a function has been called"><input type="radio" onclick="radioClicked(this);" name="dataType" value="count" />total calls</label>' +
+                      '</form></div>',
+                useHTML: true
+            },
+            tooltip: {
+                pointFormat: '--------------------------------------<br><b>{point.name}</b>: {point.percentage:.1f} %<br>Time per call: <b>{point.tpc} ms</b><br>Total async calls: <b>{point.async.count}</b><br>Total async time: <b>{point.async.total} ms</b><br>Total sync calls: <b>{point.sync.count}</b><br>Total sync time: <b>{point.sync.total} ms</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    type: 'pie',
+                    name: 'functions',
+                    data: data
+                }
+            ]
+        });
+    });
+    function radioClicked() {
+        var i;
+        var value = $("input:radio[name ='dataType']:checked").val();
+        switch(value) {
+            case "average":
+                for(i = 0; i < data.length; i++) {
+                    data[i].y = data[i].tpc;
+                }
+                break;
+            case "count":
+                for(i = 0; i < data.length; i++) {
+                    data[i].y = (data[i].async.count + data[i].sync.count);
+                }
+                break;
+            case "total":
+                for(i = 0; i < data.length; i++) {
+                    data[i].y = (data[i].async.total + data[i].sync.total);
+                }
+                break;
+        }
+        chart.series[0].setData(data, true);
+    }
+    //]]>
+    </script>
+</head>
+<body>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<div id="container" style="min-width: 300px; height: 800px; margin: 0 auto"></div>
+</body>
+</html>
