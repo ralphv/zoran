@@ -1,5 +1,7 @@
 ## zoran - a node.js utility that allows you to do performance profiling at the functions level (previously node.profiler)
 
+[![Join the chat at https://gitter.im/ralphv/zoran](https://badges.gitter.im/ralphv/zoran.svg)](https://gitter.im/ralphv/zoran?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![NPM](https://nodei.co/npm/zoran.png?mini=true)](https://nodei.co/npm/zoran/)
 
 * [Features](#features)
